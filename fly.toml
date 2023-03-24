@@ -1,0 +1,56 @@
+# fly.toml file generated for charlendar-db on 2023-03-04T11:39:33+09:00
+
+app = "charlendar-db"
+kill_signal = "SIGINT"
+kill_timeout = 5
+primary_region = "nrt"
+
+[build]
+  builder = "heroku/buildpacks:20"
+
+[env]
+  PRIMARY_REGION = "nrt"
+
+[metrics]
+  port = 9187
+  path = "/metrics"
+
+[mounts]
+  source = "pg_data"
+  destination = "/data"
+
+[checks]
+  [checks.pg]
+    port = 5500
+    type = "http"
+    interval = "15s"
+    timeout = "10s"
+    path = "/flycheck/pg"
+  [checks.role]
+    port = 5500
+    type = "http"
+    interval = "15s"
+    timeout = "10s"
+    path = "/flycheck/role"
+  [checks.vm]
+    port = 5500
+    type = "http"
+    interval = "15s"
+    timeout = "10s"
+    path = "/flycheck/vm"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 5432
+
+  [[services.ports]]
+    port = 5432
+    handlers = ["pg_tls"]
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 5433
+
+  [[services.ports]]
+    port = 5433
+    handlers = ["pg_tls"]

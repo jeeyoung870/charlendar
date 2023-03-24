@@ -1,0 +1,24 @@
+Machine 3d8d114fe67089 is created
+==> Monitoring health checks
+  Waiting for 3d8d114fe67089 to become healthy (started, 3/3)
+
+Postgres cluster charlendar-db created
+  Username:    postgres
+  Password:    kzT0HhInjdPipSX
+  Hostname:    charlendar-db.internal
+  Flycast:     fdaa:0:f5d9:0:1::3
+  Proxy port:  5432
+  Postgres port:  5433
+  Connection string: postgres://postgres:kzT0HhInjdPipSX@charlendar-db.flycast:5432
+
+Save your credentials in a secure place -- you won't be able to see them again!
+
+Connect to postgres
+Any app within the didjrmfjr@gmail.com organization can connect to this Postgres using the above connection string
+
+
+[after running 'fly pg attach charlendar-db' ]
+Postgres cluster charlendar-db is now attached to charlendar
+The following secret was added to charlendar:
+  DATABASE_URL=postgres://charlendar:fzw5iptoNUjVS36@top2.nearest.of.charlendar-db.internal:5432/charlendar?sslmode=disable
+
