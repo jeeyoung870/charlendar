@@ -1,0 +1,10 @@
+[ Order of encryption ]
+
+1) delete 'config.js' file. (store it somewhere)
+2) create .gitattributes file and write line 'config.js filter=git-crypt diff=git-crypt'
+3) command 'git add .' and 'git commit -m "--"'
+4) 'git-crypt init -k enc' and save the key file. (.git/git-crypt/keys/enc)
+5) create 'config.js' file.
+6) command 'git add .' and 'git commit -m "--"'
+7) 'git-crypt lock -k enc' (encrypts the file and stages it for commit)
+8) 'git commit -m "Encrypt config.js"'
