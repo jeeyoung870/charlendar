@@ -1,0 +1,62 @@
+[ Install git-crypt ]
+
+1. Install git-crypt on Windows.
+   https://github.com/oholovko/git-crypt-windows
+
+
+[ Order of encryption ]
+
+(git-crypt으로 암호화보관하기 위해서는 해당파일이 한번도 git commit한 이력이 없어야 한다.)
+(.git 삭제후 initialize 새로해야함.)
+(플젝에서 config.js 삭제한 상태로 시작.)
+
+>git init
+Initialized empty Git repository in D:/Users/jy870/외부프젝/sideProject/encryptTest/.git/
+
+(add and commit present status)
+
+>git-crypt init
+Generating key...
+
+( .git/git-crypt/keys/default ---> copy the generated 'default' key file to other directory.)
+( create '.gitattributes' file and write line --> 'src/config.js filter=git-crypt diff=git-crypt')
+( create 'config.js' file.)
+
+>git add .
+
+>git commit -m "--"
+[master (root-commit) e0d14c1] --
+ 2 files changed, 1 insertion(+)
+ create mode 100644 .gitattributes
+ create mode 100644 config.js
+
+>git-crypt lock
+
+>git status
+On branch master
+nothing to commit, working tree clean
+
+>git-crypt status
+not encrypted: .gitattributes
+    encrypted: config.js
+
+>암호화성공. 순서 주의!!
+
+=============================================
+
+[ How to Unlock config.js ]
+
+>git-crypt unlock C:\Users\Metanet\Downloads\default
+
+문법 : 
+>git-crypt unlock [키파일 위치한 디렉토리경로]
+unlock 하고나면 .git/git-crypt/keys/ 위치에 default 다시 생겨있음.
+처음 lock했을때 생성된거랑 똑같은거니까 다시 저장할 필요 없음.
+
+unlock한 파일 변경후 저장할 경우 : 
+>git add src/config.js
+>git commit -m "--"
+>git-crypt lock 
+
+!!! 푸시 전에 반드시 lock 해줘야함 !!!
+ 

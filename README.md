@@ -1,11 +1,18 @@
 # charlendar
 
-charlendar Project using Nodejs, Reactjs, axios, and PostgreSQL.
+charlendar Project using Nodejs, Reactjs, axios, git-crypt and PostgreSQL.
 Cloud deploy with fly.io.
 When running on localhost, this app cannot externally connect to fly.io postgre DB.(use local DB)
 
 -
 -
+
+#00 CHECK BEFORE DEPLOY
+
+1. 'server.js' file > listening port
+2. 'postgreDB.js' file > DB client (fly internal or local)
+3. 'config.js' file > ensure to be decrypted. (refer 'howTo_git-crypt.txt')
+4. html files except welcome page > script link 'devtools-detector.js'
 
 #01 LOCAL INSTALL AND SETTING
 
