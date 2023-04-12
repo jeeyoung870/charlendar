@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/public/css/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/public/css/welcomePage.css">
+    <title>어서오세요!</title>
+</head>
+<body>
+    <input id="redirect" value=<%=redirectPath%> hidden />
+    <div class="login_all">
+        <div class="logo_with_hand">
+            <span class="logo">Charlendar</span>
+            <img src="/public/css/image/waving_hand.png">
+        </div>
+        <div class="p_welcom">
+            <span class="font_key_color">챌린더</span>와 함께 경제 일기를 쓰고<br>
+            투자와 친해져 볼까요?
+        </div>
+        <div id="goGoogleLogin"></div>
+    </div>
+
+    
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- Login Check -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.11.0/qs.min.js"></script>
+<script src="/public/js/googleLogin.js" type="text/babel" ></script>
+
+<script type="text/babel" >
+const redirectPath = document.getElementById('redirect').value;
+
+function GoogleLoginBtn() {
+    return(
+        <a href="javascript:void(0);" onClick={() => doGoogleLogin(redirectPath)} >
+            <div class="login_button">
+                <div class="button_align">
+                    <span class="img_padding">
+                        <img src="/public/css/image/google logo.png" />
+                    </span>
+                    <span class="google_text">Google 로그인</span>
+                </div>
+            </div>
+        </a>
+    );
+}
+const goGoogleLogin = document.getElementById("goGoogleLogin");
+ReactDOM.render(<GoogleLoginBtn />, goGoogleLogin); 
+</script>
+
+</html>

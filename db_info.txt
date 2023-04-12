@@ -1,0 +1,10 @@
+[after running 'fly pg attach charlendar-db' ]
+The following secret was added to charlendar:
+  DATABASE_URL=postgres://charlendar:fzw5iptoNUjVS36@charlendar-db.flycast:5432/charlendar?sslmode=disable
+
+to use internal DB,
+edit into this format:
+  DATABASE_URL="postgres://{app-name}:{password}@top2.nearest.of.{db-app-name}.internal:5432/{app-name}?sslmode=disable"
+
+config.js : 
+  DATABASE_URL="postgres://charlendar:fzw5iptoNUjVS36@top2.nearest.of.charlendar-db.internal:5432/charlendar?sslmode=disable"

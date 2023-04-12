@@ -1,0 +1,165 @@
+/*@font-face {
+  font-family: "codec";
+  src: url("css/font/Codec-Cold-Heavy-trial.ttf") format("truetype");
+}
+/*{ font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }*/
+@font-face {
+    font-family: "s_bold";
+    src: url("/public/css/font/SpoqaHanSansNeo-Bold.ttf") format("truetype");
+}
+@font-face {
+    font-family: "codec";
+    src: url("/public/css/font/Codec-Cold-Heavy-trial.ttf") format("truetype");
+}
+* {
+font-family: 's_bold';
+}
+a{color:black;text-decoration: none;}
+a:visted{color:black;text-decoration: none;}
+body{background: #f9f9f9; padding-top:30px; padding-bottom:160px}
+.font_key_color{color: #625FFF}
+
+#settings {
+  /* margin-left: 312.6px; */
+  margin: auto;
+  width: 23px;
+}
+#settings a img {
+  width:23px;
+}
+
+.logo{margin: auto;font-size:30px;font: "codec" !important; width:320px;margin-bottom: 20px}
+.contents_all{margin:auto}
+
+.user_profile{width:280px;height:56px; margin: auto;margin-bottom: 20px;}
+.p_batting_average{display: inline-block; vertical-align: top;height: 50px;margin-right:56px; padding-top:4px}
+.user_name{font-size: 12px; }
+.average_is{font-size: 12px}
+.your_average{font-size: 20px;margin-right: 10px}
+.your_rank{font-size:12px;display: inline}
+.user_emoji{display: inline-block;width: 62px; height: 56px}
+
+.private_message{width: 280px;
+  overflow:auto;padding:20px;
+  background: white;
+  border-radius:20px;margin: auto;
+  box-shadow: 0 2px 8px 0 rgba(99,99,99,0.2);
+  align-items: center;
+  margin-bottom: 20px
+  }
+.private_message_title{font-size: 16px; color:#625FFF;margin-bottom: 2px}
+.p_private_message{font-size: 12px;}
+
+.calendar{width: 280px;
+  overflow:auto;padding:20px;
+  background: white;
+  border-radius:20px;margin: auto;
+  box-shadow: 0 2px 8px 0 rgba(99,99,99,0.2);
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 20px
+  }
+
+.diary_button{
+  width: 310px;padding-top:12px;
+  height: 36px;
+  background: #625FFF;
+  border-radius:8px;margin: auto;
+  font-size: 18px;
+  color:white;
+  text-align: center;
+}
+.today_holiday {
+  background: #9C9C9C;
+}
+
+.guide_holiday{color:#9C9C9C; font-size: 12px; width: 320px; margin: auto;padding-top:20px}
+
+
+
+/* myCalendar */
+
+.dateHead {
+  margin-bottom: .4rem;
+}
+
+.dateHead div {
+  /* background: #625fff96; */
+  color: #625FFF;
+  text-align: center;
+  height: 10px;
+  border-radius: .4rem;
+}
+
+.dateTitle {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+}
+
+.grid div {
+  padding: .6rem;
+  font-size: .9rem;
+  cursor: pointer;
+}
+
+.dateBoard div {
+  font-weight:800;
+  font-size:8px;
+  /* min-height: 2rem; */
+  /* width: 3rem; */
+  padding: .2rem;
+  border-radius: .4rem;
+  border: 1px solid #eee;
+  height: 38px;
+}
+
+.normalDay {
+  color: #222;
+}
+.holiday {
+  color: rgba(0, 0, 0, 0.295);
+}
+.dateBoard div p {
+  font-size:7px;
+  font-weight:400;
+  margin-top: .2rem;
+}
+.calendar_face{
+  width: 24px;
+}
+
+.noColor {
+  background: #eee;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 1rem 2rem; */
+}
+
+.btn {
+  margin-top: 4px;
+ display: block;
+ width: 10px;
+ height: 10px;
+ border: 3px solid #000;
+ border-width: 3px 3px 0 0;
+ cursor: pointer;
+}
+
+.prevDay {
+  transform: rotate(-135deg);
+}
+
+.nextDay {
+  transform: rotate(45deg);
+}
+

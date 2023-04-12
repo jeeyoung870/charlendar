@@ -1,0 +1,42 @@
+/*@font-face {
+  font-family: "codec";
+  src: url("css/font/Codec-Cold-Heavy-trial.ttf") format("truetype");
+}
+/*{ font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }*/
+@font-face {
+    font-family: "s_bold";
+    src: url("/public/css/font/SpoqaHanSansNeo-Bold.ttf") format("truetype");
+}
+@font-face {
+    font-family: "codec";
+    src: url("/public/css/font/Codec-Cold-Heavy-trial.ttf") format("truetype");
+}
+* {
+font-family: 's_bold';
+}
+a{color:black;text-decoration: none;}
+a:visted{color:black;text-decoration: none;}
+body{background: #f9f9f9; display: flex;
+justify-content: center;
+align-items:center;
+min-height: 100vh;}
+
+.login_all{width: 320px;height:204px; margin: auto}
+.logo_with_hand{width:300px;padding-bottom: 8px; margin: auto}
+.logo{margin: auto;font-size:30px;font: "codec" !important}
+.p_welcom{font-size: 20px; width:300px;padding-bottom: 30px;font: "s_bold"; margin: auto}
+.login_button{width: 310px;
+  height: 48px;
+  background: #625FFF;
+  border-radius:8px;margin: auto;
+  font-size: 18px;
+  color:white;
+  display: flex;
+  align-items: center;
+  }
+.img_padding{margin-right: 4px;width:27px;
+height:26px}
+.button_align{width:160px;margin:auto;height: 26px}
+.google_text{vertical-align: top;height: 26px}
+
+.font_key_color{color: #625FFF}

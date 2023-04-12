@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/public/css/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css"> 
+    <title>관리자 페이지</title>
+    <script src="/public/js/devtools-detector.js"></script>
+</head>
+<body>
+    <h1>초기데이터 설정</h1>
+    <div id="dataSetting"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- Login Check -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.11.0/qs.min.js"></script>
+<script src="/public/js/googleLogin.js" type="text/babel" ></script>
+<!-- InitData Setting App -->
+<script src="/public/js/initDataSetting.js" type="text/babel" ></script>
+
+<script type="text/babel">
+const mgrId = 'didjrmfjr@gmail.com';
+
+const InitDataSettingApp = () => {
+    // check login and get user info.
+    const [user, setUser] = React.useState({});
+    React.useEffect(() => {
+        // alert('MyEcoCalendarApp useEffect!');
+        loginCheck().then(userInfo => {
+            setUser(userInfo);
+        }).catch(err => {console.error(err);});
+    }, []);
+    // 관리자id아니면 block
+    if(!user || user.userId === undefined){
+        return <div></div>;
+    } else if(user.userId !== mgrId) {
+        alert("관리자 계정으로만 접근 가능한 페이지입니다.");
+        return <div></div>;
+    } else {
+        return(
+            <div>
+                <InitBusinessDaySet />
+                <AddStock />
+                <InitChartDataSet />
+            </div>
+        );
+    }
+}
+
+const dataSetting = document.getElementById("dataSetting");
+ReactDOM.render(<InitDataSettingApp />, dataSetting);
+
+</script>
+</html>

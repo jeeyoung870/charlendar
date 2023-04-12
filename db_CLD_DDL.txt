@@ -1,0 +1,73 @@
+-- schema CLD DDL
+
+
+--휴장일정보
+CREATE TABLE cld.MARKET_HOLIDAY  
+( 
+	DT VARCHAR(50) NOT NULL,
+	DESCRIPTION VARCHAR(100),
+	TYPE VARCHAR(1),
+	constraint  MARKET_HOLIDAY_PK primary key (DT)
+); 
+
+-- 회원정보
+CREATE TABLE cld.user_info (
+	userid varchar(300) NOT NULL,
+	usernm varchar(100) NOT NULL,
+	photourl varchar(4000) NULL,
+	agerange varchar(100) NULL,
+	gender varchar(50) NULL,
+	CONSTRAINT user_info_pk PRIMARY KEY (userid)
+);
+
+--회원 타율랭킹
+CREATE TABLE cld.user_ranking (		
+	userid varchar(300) NOT NULL,
+	voterange varchar(50) NOT NULL,
+	voterate numeric(5,2) NULL,
+	CONSTRAINT user_ranking_pk PRIMARY KEY (userid, voterange)
+);
+
+-- 주식정보 MASTER 테이블
+CREATE TABLE cld.STOCK_INFO	
+( 
+	STCKCODE VARCHAR(30) NOT NULL,
+	STCKNM_ENG VARCHAR(50) ,
+	STCKNM_KR VARCHAR(50) ,
+	REGION VARCHAR(10) ,
+	constraint  STOCK_INFO_PK primary key (STCKCODE)
+); 
+insert into cld.STOCK_INFO VALUES('^IXIC', 'NASDAQ', '나스닥지수', 'US');
+insert into cld.STOCK_INFO VALUES('^GSPC', 'S&P', 'S&P지수', 'US');
+insert into cld.STOCK_INFO VALUES('^DJI', 'DOW', '다우지수', 'US');
+
+--DAILY 시계열 price 데이터
+--데이터있을시 MASTER테이블정보 삭제못함
+CREATE TABLE cld.STOCKPRICE_DAILY		
+( 
+	DT VARCHAR(50) NOT NULL,
+	STCKCODE VARCHAR(30) NOT null references cld.STOCK_INFO(STCKCODE) ON DELETE RESTRICT, 
+	BASEPRICE numeric(20,4),
+	ENDPRICE numeric(20,4),
+	RTN numeric(15,5),
+	constraint  STOCKPRICE_DAILY_PK primary key (DT, STCKCODE)
+); 
+
+--매일 경제일기
+CREATE TABLE cld.DAILY_DIARY		
+( 
+	DT VARCHAR(50) NOT NULL,
+	USERID VARCHAR(100) NOT NULL,
+	MEMO VARCHAR(1000),
+	VOTECODE VARCHAR(30) NOT null references cld.STOCK_INFO(STCKCODE), 
+	VOTE VARCHAR(4) default 'X' not null, 
+	VOTECHK BOOLEAN, 
+	WINCOUNT numeric(5,0), 
+	constraint  DAILY_DIARY_PK primary key (DT, USERID) 
+);
+
+
+
+
+
+commit;

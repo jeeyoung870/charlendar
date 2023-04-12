@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/public/css/image/favicon.ico" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">  -->
+    <link rel="stylesheet" href="/public/css/dailyDiary.css">
+    <link rel="stylesheet" href="/public/css/dailyChart.css">
+    <title>경제 일기</title>
+    <script src="/public/js/devtools-detector.js"></script>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- apexchart script start -->
+    <script>
+        window.Promise ||
+          document.write(
+            '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+          )
+        window.Promise ||
+          document.write(
+            '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+          )
+        window.Promise ||
+          document.write(
+            '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+          )
+        // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+        // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+        var _seed = 42;
+        Math.random = function() {
+            _seed = _seed * 16807 % 2147483647;
+            return (_seed - 1) / 2147483646;
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-apexcharts@1.3.6/dist/react-apexcharts.iife.min.js"></script>
+    <!-- apexchart script end -->
+</head>
+<body>
+    <input id="targetDt" value=<%=targetDt%> hidden />
+    <div id="dailyCharlendar" class="contents_all" ></div>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<!-- Login Check -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.11.0/qs.min.js"></script>
+<script src="/public/js/googleLogin.js" type="text/babel" ></script>
+<!-- CharlendarContent included apps -->
+<script src="/public/js/dailyDiaryAndChart.js" type="text/babel" ></script>
+<script src="/public/js/commonFunc.js" ></script>
+<!-- chart draw code -->
+<script src="/public/js/apexChartComp.js" type="text/babel" ></script>
+
+
+
+<script type="text/babel">
+const initDt = document.getElementById('targetDt').value;
+// 9시간 더해서 한국 현재시간으로 맞추기
+var todayObj = new Date();
+todayObj.setHours(todayObj.getHours()+9);
+const today = todayObj.toISOString().slice(0,10);
+
+const CharlendarContent = ({user}) => {
+    // stock_info array(stck)
+    const [stcks, setStcks] = React.useState([]);
+    const [dt, setDt] = React.useState(initDt);
+
+    React.useEffect(() => {
+        getAllStockInfo().then(stockInfos => {
+            setStcks(stockInfos);
+        });
+    }, [user]);
+
+    const oneDay = 24 * 60 * 60 * 1000; //miliseconds
+    // 전, 후 영업일 가져오기
+    function goYesterday() {
+        getNextBday(dt, -oneDay).then(bDay => {
+            console.log('바로 전 영업일 : ', bDay );
+            setDt(bDay);
+        });
+    }
+    function goTomorrow() {
+        if(dt===today){return;}     // 오늘이후로는 이동X
+        getNextBday(dt, +oneDay).then(bDay => {
+            console.log('바로 다음 영업일 : ', bDay );
+            setDt(bDay);
+        });
+    }
+
+    return(
+        <div>
+            <div className="title_all">
+
+                {/* 뒤로가기버튼
+                <a href="/myEcoCalendar" id="goBack" className="button_align"><img src="/public/css/image/back.png"/></a> */}
+                
+                <div id="goYesterday" className="button_align" onClick={goYesterday}>
+                    <img src="/public/css/image/back.png"/>
+                </div>
+                <span className="today_date" >{dt}</span>
+                <div id="goTomorrow" className="button_align" onClick={goTomorrow}>
+                    <img src="/public/css/image/next.png"/>
+                </div>
+            </div> 
+            <DailyChart userId={user.userId} dt={dt} stckArr={stcks} />
+            <DailyEconomyIssues dt={dt} />
+            <DailyDiaryForm user={user} dt={dt} stckArr={stcks} />
+        </div>
+    );
+}
+
+const DailyCharlendarApp = () => {
+    // check login and get user info.
+    const [user, setUser] = React.useState({});
+    React.useEffect(() => {
+        loginCheck().then(userInfo => {
+            setUser(userInfo);
+        }).catch(err => {console.error(err);});
+    }, []);
+    return(
+        <div>
+            <CharlendarContent user={user} />
+        </div>
+    );
+}
+
+const dailyCharlendar = document.getElementById("dailyCharlendar");
+ReactDOM.render(<DailyCharlendarApp />, dailyCharlendar);   
+</script>
+
+</html>

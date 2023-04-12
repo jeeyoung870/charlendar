@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/public/css/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/public/css/myEcoCalendar.css">
+    <title>Charlendar</title>
+    <script src="/public/js/devtools-detector.js"></script>
+</head>
+<body>
+    <div id="myEcoCalendar"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- Login Check -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.11.0/qs.min.js"></script>
+<script src="/public/js/googleLogin.js" type="text/babel" ></script>
+<!-- DailyDiaryApp -->
+<script src="/public/js/myStatus.js" type="text/babel" ></script>
+<script src="/public/js/myCalendar.js" type="text/babel" ></script>
+<script src="/public/js/commonFunc.js" ></script>
+
+<script type="text/babel">
+const mgrId = 'didjrmfjr@gmail.com';
+// 9시간 더해서 한국시간 맞추기
+var todayObj = new Date();
+todayObj.setHours(todayObj.getHours()+9);
+const todayStr = todayObj.toISOString().slice(0,10);
+
+const oneDay = 24 * 60 * 60 * 1000; //miliseconds
+
+const MyEcoCalendarApp = () => {
+    // alert('MyEcoCalendarApp render start');
+    // check login and get user info.
+    const [user, setUser] = React.useState({});
+    // const [diaryArr, setDiaryArr] = React.useState([]);
+    const [stcks, setStcks] = React.useState([]);
+
+    React.useEffect(() => {
+        // alert('MyEcoCalendarApp useEffect!');
+        loginCheck().then(userInfo => {
+            setUser(userInfo);
+            getAllStockInfo().then(stockInfos => {
+                setStcks(stockInfos);
+            });
+        }).catch(err => {console.error(err);});
+    }, []);
+    return(
+        <div className="contents_all" >
+            {user.userId === mgrId ? 
+                <div id="settings" >
+                    <a href="/initDataSetting">
+                        <img src="/public/css/image/settings.png" />
+                    </a>
+                </div>
+            : null }
+            <div className="logo">Charlendar</div>  
+            <MyStatus userId={user.userId} userNm={user.userNm} stckArr={stcks} />
+            <MyCalendar userId={user.userId} userNm={user.userNm} /*monthDiary={diaryArr}*/ />
+            
+            <div className="guide_holiday">ⓘ 주말을 포함한 휴장일은 챌린더를 쉬어가요.</div>
+            <div className="guide_holiday" onClick={logout} >로그아웃</div>
+        </div>
+    );
+}
+
+function getMonthDiary(yearMonthStr, userId) {
+    return new Promise((resolve,reject) => {
+        const options = {
+            method: 'POST',
+            url: "/get_monthDiary",
+            data: {userId:userId, yearMonthStr:yearMonthStr},
+            withCredentials: true
+        };
+        axios.request(options).then(res => {
+            resolve(res.data) ;
+        }).catch(function (error) {
+            console.error(error);
+        });
+    });
+}
+// const myStatus = document.getElementById("myStatus");
+// const myCalendar = document.getElementById("myCalendar");
+const myEcoCalendar = document.getElementById("myEcoCalendar");
+ReactDOM.render(<MyEcoCalendarApp />, myEcoCalendar);
+
+</script>
+</html>
