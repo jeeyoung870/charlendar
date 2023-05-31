@@ -12,8 +12,8 @@ const client = new Client({
     port : Config.postgre.port
 });
 
-// // fly.io internal connection
-// // // const DATABASE_URL = 'postgres://charlendar:fzw5iptoNUjVS36@top2.nearest.of.charlendar-db.internal:5432/charlendar?sslmode=disable';
+// fly.io internal connection
+// // const DATABASE_URL = 'postgres://charlendar:fzw5iptoNUjVS36@top2.nearest.of.charlendar-db.internal:5432/charlendar?sslmode=disable';
 // const client = new Client(Config.fly_postgre.DATABASE_URL);
 
 // connection 확인
