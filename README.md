@@ -69,6 +69,9 @@ nodemon.json -> src/server.js -> views/home.pug -> js/app.js
 
 #02 APPLIED API
 
+[ axios + cheerio ]
+https://velog.io/@_nine/Node.js-Crawling-feat.-Cheerio
+
 [ Google login ]
 https://www.daleseo.com/google-oauth/
 https://developers.google.com/people/api/rest/v1/people/get
@@ -136,7 +139,7 @@ https://fly.io/docs/languages-and-frameworks/node/
 ! you should do this at diffrrent directory.
 
 1.  charlendar-db/powershell > fly postgres create
-    !choice 1GB volume.
+    !choose 1GB volume.
     !save DB info created while postgres creation.
 
 [ attach charlendar-db on charlendar app ]
