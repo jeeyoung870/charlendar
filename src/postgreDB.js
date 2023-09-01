@@ -1,63 +1,86 @@
 // postgreSql 모듈 import
-import { Client } from "pg";
+// import { Client } from "pg";
+import { Pool } from "pg";
 import { Query } from 'pg';
 import Config from "./config";
 
-// local postgre connection
-const client = new Client({
-    user : Config.postgre.user,
-    host : Config.postgre.host,
-    database : Config.postgre.database,
-    password : Config.postgre.password,
-    port : Config.postgre.port
-});
+// // local postgre connection
+// const pool = new Pool({
+//     user : Config.postgre.user,
+//     host : Config.postgre.host,
+//     database : Config.postgre.database,
+//     password : Config.postgre.password,
+//     port : Config.postgre.port,
+//     max : 20
+// });
 
 // fly.io internal connection
-// // const DATABASE_URL = 'postgres://charlendar:fzw5iptoNUjVS36@top2.nearest.of.charlendar-db.internal:5432/charlendar?sslmode=disable';
-// const client = new Client(Config.fly_postgre.DATABASE_URL);
+// const DATABASE_URL = 'postgres://charlendar:fzw5iptoNUjVS36@top2.nearest.of.charlendar-db.internal:5432/charlendar?sslmode=disable';
+const pool = new Pool({
+    connectionString : Config.fly_postgre.DATABASE_URL,
+    max : 20
+});
 
 // connection 확인
 const checkConnection = () => {
-    client.connect(err => {
+    pool.connect((err,client) => {
         if (err) {
-          console.error('DB Connection error', err.stack)
+            console.error('DB Connection error', err.stack);
         } else {
-            console.log('DB Connection success!')
+            console.log('DB Connection success!');
         }
+        client.release();
     });
 }
 // This function resolves query results(array of objects).
 const executeQuery = (query) => {
-    return new Promise((resolve,reject) => {
-        client.query(query);
-        var rows = [];
+    return new Promise(async (resolve,reject) => {
 
-        query.on("row", row => {
-            rows.push(row);
-        });
-        query.on('end', () => {
-            // console.log('query done');
-            resolve(rows);
-        });
-        query.on('error', err => {
-            console.error(err.stack)
+        pool.connect(async (err,client) => {
+            if (err) {
+                console.error('DB Connection error', err.stack);
+            } else {
+                var rows = [];
+                await client.query(query);
+                
+                query.on("row", row => {
+                    rows.push(row);
+                });
+                query.on('end', () => {
+                    // console.log('query done');
+                    resolve(rows);
+                });
+                query.on('error', err => {
+                    console.error(err.stack)
+                });
+                client.release();
+            }
         });
     });
 }
-// 컬럼 1개일때 object아닌 array로 반환
+// case there's one column : returns String array(not an Object)
 const executeQueryToArray = (query, colName) => {
-    return new Promise((resolve,reject) => {
-        client.query(query);
-        var arr = [];
-        query.on("row", row => {
-            arr.push(row[colName]);
-        });
-        query.on('end', () => {
-            // console.log('query done');
-            resolve(arr);
-        });
-        query.on('error', err => {
-            console.error(err.stack)
+    return new Promise(async (resolve,reject) => {
+
+        pool.connect(async (err,client) => {
+            if (err) {
+                console.error('DB Connection error', err.stack);
+            } else {
+                var arr = [];
+                await client.query(query);
+    
+                query.on("row", row => {
+                    arr.push(row[colName]);
+                });
+                query.on('end', () => {
+                    // console.log('query done');
+                    resolve(arr);
+                });
+                query.on('error', err => {
+                    console.error(err.stack)
+                });
+                client.release();
+            }
         });
     });
 }

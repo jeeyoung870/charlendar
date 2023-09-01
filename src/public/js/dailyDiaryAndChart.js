@@ -121,7 +121,7 @@ const DailyEconomyIssues = ({ dt}) => {
     
     return (
         <div className="today_message">
-            <div className="message_title" >오늘의 경제 이슈</div>
+            <div className="message_title" >Today's Issues</div>
             <div className="p_today_message" >
                 {issueArr.map((issue, index) => (
                     <a href={issue.issueUrl} target="_blank" rel="noopener noreferrer" >
@@ -133,7 +133,7 @@ const DailyEconomyIssues = ({ dt}) => {
     );
 };
 
-const updownMap = {BULL:'상승', BEAR:'하락'};
+const updownMap = {BULL:'Bullish', BEAR:'Bearish'};
 const limitTime = 14*(1000*60*60) + 30*(1000*60);    // 11:30 (미국주식시장 open시각) 세팅
 const DailyDiaryForm = ({user, dt, stckArr}) => {
 
@@ -198,7 +198,7 @@ const DailyDiaryForm = ({user, dt, stckArr}) => {
             withCredentials: true
         };
         axios.request(options).then(res => {
-            alert(`${res.data[0].dt} 일기 저장 성공!`);
+            alert(`${res.data[0].dt} Diary Saved!`);
         }).catch(function (error) {
         console.error(error);
         });
@@ -207,9 +207,9 @@ const DailyDiaryForm = ({user, dt, stckArr}) => {
     return(
         <div>
             <div className="diary_all">
-                <div className="message_title">메모</div>
+                <div className="message_title">My Diary</div>
                 <div className="diary">
-                    <div>{diary.memo?diary.memo.length:0}/500자</div>
+                    <div>{diary.memo?diary.memo.length:0}/500</div>
                     <textarea cols="30" rows="10" 
                         name="memo" className="dairy_textarea"
                         value={diary.memo} maxlength="500"
@@ -219,18 +219,18 @@ const DailyDiaryForm = ({user, dt, stckArr}) => {
 
                 <div className="bull_and_bear_all">
                     <div className="message_title">
-                        <span>{"오늘의 "}</span>
+                        <span>{"Today's "}</span>
                         <span>
                             <select name="votecode" value={diary.votecode} 
                                 onChange={handleChange}
                                 disabled={ (new Date(dt).getTime() + limitTime) > new Date().getTime() ? false : true }
                             >
                                 { stckArr.map((stck, index) => (
-                                    <option value={stck.stckcode}>{stck.stcknm_kr}</option>
+                                    <option value={stck.stckcode}>{stck.stcknm_eng}</option>
                                 )) }
                             </select>
                         </span>
-                        <span>{"는?"}</span>
+                        <span>{"will be..."}</span>
                     </div>
                     {/* <select 
                         name="vote" value={diary.vote} 
@@ -254,27 +254,28 @@ const DailyDiaryForm = ({user, dt, stckArr}) => {
                 { (new Date(dt).getTime() + limitTime) > new Date().getTime() ? null : 
                     <div className="predict_message" >
                         {diary.votechk===null ? 
-                            <div className="predict_message_title">예측 기간 종료</div> : 
+                            <div className="predict_message_title">Prediction Period Ended</div> : 
                             (diary.votechk ? 
                                 <div>
-                                    <div className="predict_message_title">🎉예측성공!🎉</div>
+                                    <div className="predict_message_title">🎉Prediction Succeed!🎉</div>
                                     <div class="p_predict_message">
+                                        predicted the {updownMap[diary.vote]} of 
                                         {stckArr.map((stck, index) => (
-                                            stck.stckcode==diary.votecode ? stck.stcknm_kr : ''
-                                        ))}의 {updownMap[diary.vote]}을 예측했어요!
+                                            stck.stckcode==diary.votecode ? ' '+stck.stcknm_eng : ''
+                                        ))}!
                                     </div>
                                 </div> 
                                 : 
                                 <div>
-                                    <div className="predict_message_title">💀예측 실패!💀</div>
-                                    <div class="p_predict_message">다음엔 꼭 맞춰봐요!</div>
+                                    <div className="predict_message_title">💀Prediction Failed!💀</div>
+                                    <div class="p_predict_message">Let's get correct next time!</div>
                                 </div>
                             )
                         }
                     </div>
                 }
             </div>
-            <div onClick={saveDiary} className="diary_button" >일기 저장하기</div>
+            <div onClick={saveDiary} className="diary_button" >Save Diary</div>
         </div>
     );
 };

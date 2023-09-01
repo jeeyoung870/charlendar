@@ -69,6 +69,11 @@ nodemon.json -> src/server.js -> views/home.pug -> js/app.js
 
 #02 APPLIED API
 
+[ node.js postgre module 'pg' ]
+https://jsikim1.tistory.com/178
+pg Pool usage :
+https://node-postgres.com/apis/pool
+
 [ axios + cheerio ]
 https://velog.io/@_nine/Node.js-Crawling-feat.-Cheerio
 
@@ -121,7 +126,7 @@ https://fly.io/docs/languages-and-frameworks/node/
 
 \*\* If there is an error while deploying, run 'fly doctor' to check deploy status.
 
-[ set to auto restart ]
+<!-- [ set to auto restart ] --------- 2023.07 Only applicable to V1 (Nomad) apps (not used)
 
 - When app crashes, this config will restart app automatically.
   https://community.fly.io/t/instance-or-service-not-restarted-when-i-expected-it-to/6155
@@ -133,7 +138,19 @@ https://fly.io/docs/languages-and-frameworks/node/
    restart_limit = 3
    timeout = "2s"
 
-\* default (restart_limit = 0) means do not restart.
+\* default (restart_limit = 0) means do not restart. -->
+
+[ set to auto stop/start based on traffic ] --> for V2 apps
+
+1. fly.toml > edit [[services]]
+   [[services]]
+   auto_stop_machines = true
+   auto_start_machines = true
+   min_machines_running = 1
+
+- This configs let fly machine to automatically stop when there's no request, and restart when there's traffic.
+  There will be at least 1 machine running always.
+- Machine Scaling : https://fly.io/docs/apps/scale-count/#scale-up
 
 [ create fly DB(charlendar-db) app ]
 ! you should do this at diffrrent directory.

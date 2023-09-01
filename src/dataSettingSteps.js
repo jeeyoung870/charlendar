@@ -30,8 +30,8 @@ const steps = {
         console.log(`${tYear}년 휴장일정보 삭제 성공.`);
         const insertQuery = pgDB.query.insert_year_holidays(hDays);
         pgDB.executeQuery(insertQuery).then( r => {
-          console.log(`${tYear}년 휴장일정보 적재 성공.`);
-          res.send(`${tYear}년 휴장일정보 적재 성공.`);
+          console.log(`${tYear}년 휴장일정보 INSERT SUCCESS.`);
+          res.send(`${tYear}년 휴장일정보 INSERT SUCCESS.`);
           res.status(200).end();
         });
       })
@@ -40,7 +40,7 @@ const steps = {
       });
     }).catch(function (error) {
       console.error(error);
-      res.send(`${tYear}년 휴장일정보 적재 실패.`);
+      res.send(`${tYear}년 휴장일정보 INSERT FAIL.`);
     });
   },
 
@@ -197,7 +197,7 @@ function recursive_ranking_updater(userArr, firstDayOfMonth, yesterday) {
 
     if(cnt === userArr.length ){
       cnt = 0;
-      resolve(`월간 유저 랭킹 업데이트 성공.`);
+      resolve(`Monthly User Rank 업데이트 성공.`);
     }else{
       merge_user_ranking(userid, firstDayOfMonth, yesterday).then(() => {
         cnt++;
@@ -227,7 +227,7 @@ function recursive_chart_requester(stcks, tRange) {
 
     if(idx === stcks.length ){
       idx = 0;
-      resolve(`${tRange} 기간 주가데이터 적재 성공.`);
+      resolve(`${tRange} EQUITY DATA INSERT SUCCEED.`);
     }else{
       getChartData_and_insert(stck, tRange).then(() => {
         idx++;
@@ -235,7 +235,7 @@ function recursive_chart_requester(stcks, tRange) {
       })
       .catch(errMsg => {
         idx = 0;
-        reject(`${tRange} 기간 주가데이터 적재 실패.`, errMsg);
+        reject(`${tRange} EQUITY DATA INSERT FAILED.`, errMsg);
       });
     }
   });
@@ -265,7 +265,7 @@ function getChartData_and_insert(stck, tRange) {
         console.log(`${tRange}기간의 '${stckcode}' 주가데이터 삭제 성공.`);
         const insertQuery = pgDB.query.insert_chartDatas(chartData); // 한종목씩 적재함.
         pgDB.executeQuery(insertQuery).then( r => {
-          console.log(`${tRange}기간의 '${stckcode}' 주가데이터 적재 성공.`);
+          console.log(`${tRange}기간의 '${stckcode}' 주가데이터 INSERT SUCCESS.`);
           resolve();
         })
         .catch(function (error) {
@@ -279,7 +279,7 @@ function getChartData_and_insert(stck, tRange) {
       });
     })
     .catch(function (error) {
-      console.error(`api에서 ${tRange} 기간 주가데이터 요청 실패.`);
+      console.error(`api에서 ${tRange} EQUITY DATA 요청 실패.`);
       reject(error);
     });
   });

@@ -22,14 +22,14 @@ const InitBusinessDaySet = () => {
 
     return (
         <div>
-            <h2>휴장일 정보 입수</h2>
+            <h2>Insert Holiday Info</h2>
             <form onSubmit={handleSubmit}>
-                대상 년도:
+                Target Year:
                 <input type="text" placeholder="2024" required
                     value={tYear}
                     onChange={handleChange}
                 />
-                <button type="submit">적재하기</button>
+                <button type="submit">INSERT</button>
             </form>
         </div>
     );
@@ -66,32 +66,32 @@ const AddStock = () => {
 
     return (
         <div>
-            <h2>종목(stock) 추가</h2>
-            차트데이터 입수대상 주식종목을 추가합니다.
+            <h2>Add Stock</h2>
+            Add stock infos for acquiring chart datas.
             <form onSubmit={handleSubmit}>
                 <ul>
-                    <li> 종목코드(<a href="https://rapidapi.com/apidojo/api/yh-finance/">야후파이낸스</a> symbol) :
+                    <li> Stock Code(<a href="https://rapidapi.com/apidojo/api/yh-finance/">yahoo finance</a> symbol) :
                         <input
                             type="text" name="stckcode" placeholder="^IXIC" required
                             value={values.stckcode}
                             onChange={handleChange}
                         />
                     </li>
-                    <li> 표시 이름(영문) : 
+                    <li> Display Name(English) : 
                         <input
                             type="text" name="stcknm_eng" placeholder="NASDAQ" required
                             value={values.stcknm_eng}
                             onChange={handleChange}
                         />
                     </li>
-                    <li> 표시 이름(한글) : 
+                    <li> Display Name(Korean) : 
                         <input
                             type="text" name="stcknm_kr" placeholder="나스닥지수" required
                             value={values.stcknm_kr}
                             onChange={handleChange}
                         />
                     </li>
-                    <li> 지역(<a href="https://rapidapi.com/apidojo/api/yh-finance/">야후파이낸스</a> region) : 
+                    <li> Location(<a href="https://rapidapi.com/apidojo/api/yh-finance/">yahoo finance</a> region) : 
                         <input
                             type="text" name="region" placeholder="US" required
                             value={values.region}
@@ -99,7 +99,7 @@ const AddStock = () => {
                         />
                     </li>
                 </ul>
-                <button type="submit">종목 추가하기</button>
+                <button type="submit">Add Stock</button>
             </form>
         </div>
     );
@@ -121,8 +121,8 @@ const InitChartDataSet = () => {
     }
     return (
         <div>
-            <h2>5년치 과거 차트데이터 입수</h2>
-            <button onClick={insert5yearChartData}>적재하기</button>
+            <h2>Insert past 5 years' Chart Datas</h2>
+            <button onClick={insert5yearChartData}>INSERT</button>
         </div>
     );
 }

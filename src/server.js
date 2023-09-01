@@ -12,8 +12,8 @@ pgDB.checkConnection();
 
 // ================ app setting start ================
 const app = express();
-const port = process.env.PORT || 3000;   
-// const port = 8080;    // fly.io internal 실행
+// const port = process.env.PORT || 3000;   
+const port = 8080;    // fly.io internal 실행
 
 // app.set("view engine", "pug");
 app.set("view engine", "ejs");
@@ -163,26 +163,7 @@ app.post("/get_economy_issues", (req, res) => {
   const dt = req.body.dt;
   const issueOptions = {
       method: 'GET',
-      // url: 'https://kr.investing.com/economic-calendar/Service/getCalendarFilteredData/',
-      url: `https://kr.investing.com/economic-calendar/?dateFrom=${dt}&dateTo=${dt}`,
-      // data: {
-      // params: {
-      //     // country: ["110", "43", "17", "42", "5", "178", "32", "12", "26", "36", "4", "72", "10", "14", "48", "35", "37", "6","122",
-      //     // "41", "22", "11", "25", "39"],
-      //     country: ["5"],
-      //     dateFrom: dt,
-      //     dateTo: dt,
-      //     timeZone: "88",
-      //     timeFilter: "timeRemain",
-      //     currentTab: "custom",
-      //     limit_from: 0
-      // },
-      // headers: {
-      //     // 'Content-type': 'application/x-www-form-urlencoded',
-      //     'Content-type': 'application/json;charset=utf-8',
-      //     // 'Access-Control-Allow-Origin' : '*'
-      //     // 'Accept': '*/*'    
-      // }
+      url: `https://investing.com/economic-calendar/?dateFrom=${dt}&dateTo=${dt}`
   };
   axios.request(issueOptions).then(response => {
     const $ = cheerio.load(response.data);
@@ -195,7 +176,7 @@ app.post("/get_economy_issues", (req, res) => {
         // var issueName = issue.text().substring(2);
         var issueName = issue.text();
         var issueUrl = issue.attr('href');
-        twoOrThreeStar.push({issueName:issueName, issueUrl:`https://kr.investing.com${issueUrl}`});
+        twoOrThreeStar.push({issueName:issueName, issueUrl:`https://investing.com${issueUrl}`});
       }
     });
     res.send(twoOrThreeStar);
@@ -268,14 +249,14 @@ function charlendarDailyBatch() {
               setting.steps.update_user_ranking(yesterday).then(result => {
                 console.log(result);
                 resolve('batch success!!');
-              }).catch((errorMsg) => {reject(`update_user_ranking() 실행중 에러 발생 : `, errorMsg);});
-            }).catch((errorMsg) => {reject(`score_votecheck() 실행중 에러 발생 : `, errorMsg);});
+              }).catch((errorMsg) => {reject(`update_user_ranking() 실행중 ERROR : `, errorMsg);});
+            }).catch((errorMsg) => {reject(`score_votecheck() 실행중 ERROR : `, errorMsg);});
           }).catch((errorMsg) => {
-            reject(`save_range_chartData('5d') 실행중 에러 발생 : `, errorMsg);
+            reject(`save_range_chartData('5d') 실행중 ERROR : `, errorMsg);
           });
         }
       }).catch(function (error) {
-        reject(`checkBusinessday(${yesterday}) 실행중 에러 발생 : `, error);
+        reject(`checkBusinessday(${yesterday}) 실행중 ERROR : `, error);
       });
     });
   });

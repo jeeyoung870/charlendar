@@ -1,23 +1,23 @@
 // title
-const msgTitle_welcome = '어서오세요!👋';   // 정보 없을때
-const msgTitle_fail = '예측 실패..💀';
-const msgTitle_success = '예측 성공!🎉';    // 전날 성공시(휴장일에도 보임)
-const msgTitle_holiday = '오늘은 휴장일💤'; 
+const msgTitle_welcome = 'Welcome!👋';   // 정보 없을때
+const msgTitle_fail = 'Prediction Failed..💀';
+const msgTitle_success = 'Prediction Succeed!🎉';    // 전날 성공시(휴장일에도 보임)
+const msgTitle_holiday = 'Holiday💤'; 
 // 상세메세지
-const msg_welcome = `경제 일기를 쓰고, 관심종목의 차트를 맞춰봐요.`;
-const msg_fail = ' 예측은 빗나갔어요. 다시 도전해봐요!';
-const msg_success1 = '위대한 첫걸음! 앞으로도 함께해요!';  //첫번째성공
-const msg_success4 = '잘 하고 있어요!';  //2~4번째
-const msg_success9 = '챌린더가 인정한 고수!';  //5~9번째
-const msg_success10up = '챌린저들의 귀감이 되실 분!';  //10이상
-const msg_holiday = '다음 개장일은 '; 
+const msg_welcome = `Write an economic diary and predict the movement of chart.`;
+const msg_fail = `Prediction missed. Let's try again!`;
+const msg_success1 = `Great first step! Let's move forward together!`;  //첫번째성공
+const msg_success4 = `You're doing well!`;  //2~4번째
+const msg_success9 = `Master approved by Charlendar!`;  //5~9번째
+const msg_success10up = `Inspiration for Charlengers!`;  //10이상
+const msg_holiday = 'Next trading day > '; 
 // 순위별 이모지
 const emo1 = 'emoji_1.png'   // 상위100~50%
 const emo2 = 'emoji_2.png'   // 상위50~15%
 const emo3 = 'emoji_3.png'   // 상위15~5%
 const emo4 = 'emoji_4.png'   // 상위5~0%
 
-const updownMap = {BULL:'상승', BEAR:'하락'};
+const updownMap = {BULL:'Bullish', BEAR:'Bearish'};
 // const stckmap = {'^IXIC':'나스닥', '^DJI':'다우', '^GSPC':'S&P'};
 
 
@@ -36,7 +36,7 @@ const MyStatus = ({userId, userNm, stckArr}) => {
 
                 // checkBusinessday(todayStr).then();
                 getNextBday(todayStr, -oneDay).then(bDay => {
-                    console.log('바로 전 영업일 : ', bDay );
+                    console.log('Prior trading day : ', bDay );
                     getLastDiaryInfo(bDay).then( dData => {
                         console.log(dData);
 
@@ -118,21 +118,22 @@ const MyStatus = ({userId, userNm, stckArr}) => {
                 if(!dData.votechk){ // 예측 실패
                     console.log('dData.dt ==> ', dData.dt);
                     var date = new Date(dData.dt);
-                    var mm = date.getMonth()+1;
+                    // var mm = date.getMonth()+1;
+                    var mmName = date.toLocaleString("en-US", { month: "long" });
                     var dd = date.getDate();
-                    messages = [msgTitle_fail, `${mm}월 ${dd}일의 ${updownMap[dData.vote]}${msg_fail}`];
+                    messages = [msgTitle_fail, `${dd} ${mmName} ${updownMap[dData.vote]}${msg_fail}`];
                 } else{ // 예측 성공
-                    var voteInfoStr = `${stckmap[dData.votecode]}의 ${updownMap[dData.vote]}을 맞췄어요.`;
+                    var voteInfoStr = `Correctly predicted the ${updownMap[dData.vote]} of ${stckmap[dData.votecode]}!`;
                     messages = [msgTitle_success, voteInfoStr];
 
                     if(dData.wincount >= 10){
-                        var str = `${dData.wincount}일째 연승 중! ${msg_success10up}`;
+                        var str = `You're on a ${dData.wincount}-day winning streak! ${msg_success10up}`;
                         messages.push(str);
                     }else if(dData.wincount >= 5){
-                        var str = `${dData.wincount}일째 연승 중! ${msg_success9}`;
+                        var str = `You're on a ${dData.wincount}-day winning streak! ${msg_success9}`;
                         messages.push(str);
                     }else if(dData.wincount >= 2){
-                        var str = `${dData.wincount}일째 연승 중! ${msg_success4}`;
+                        var str = `You're on a ${dData.wincount}-day winning streak! ${msg_success4}`;
                         messages.push(str);
                     }else{
                         var str = `${msg_success1}`;
@@ -168,11 +169,11 @@ const MyStatus = ({userId, userNm, stckArr}) => {
         <div className="user_profile">
             <div className="p_batting_average">
                 <span className="user_name">{userNm}</span>
-                <span className="average_is">님의 이번 달 적중률은</span><br/>
+                <span className="average_is">'s Month Accuracy</span><br/>
                 <span className="your_average">{ranking.userRank.voterate}%</span>
                 <div className="your_rank">
-                    <span>{ranking.totalCnt}명 중 </span>
-                    <span className="font_key_color">{ranking.userRank.rownum}등</span>
+                    <span className="font_key_color">{ranking.userRank.rownum}th </span>
+                    <span>of {ranking.totalCnt}</span>
                 </div>
             </div>
             <div className="user_emoji">

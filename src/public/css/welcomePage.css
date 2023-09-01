@@ -24,7 +24,7 @@ min-height: 100vh;}
 .login_all{width: 320px;height:204px; margin: auto}
 .logo_with_hand{width:300px;padding-bottom: 8px; margin: auto}
 .logo{margin: auto;font-size:30px;font: "codec" !important}
-.p_welcom{font-size: 20px; width:300px;padding-bottom: 30px;font: "s_bold"; margin: auto}
+.p_welcom{font-size: 20px; width:300px;padding-bottom: 30px;padding-top: 10px;font: "s_bold"; margin: auto}
 .login_button{width: 310px;
   height: 48px;
   background: #625FFF;

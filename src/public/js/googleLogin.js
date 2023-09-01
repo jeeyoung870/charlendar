@@ -69,7 +69,7 @@ function doCharlendarLogin(access_token) {
             })
             .catch(err => {  //토큰만료 or 요청에러
                 localStorage.removeItem(ACCESS_TOKEN_KEY);
-                alert('로그인 정보 만료. 랜딩페이지로 이동합니다.');
+                alert('Log-in information expired. Move to Landing page.');
                 const win = window.location;
                 win.assign(`${win.origin}/welcome?path=${win.pathname}`);
             });
@@ -107,7 +107,7 @@ function doGoogleLogin(redirectPath) {
 }
 function logout(){
     localStorage.removeItem(ACCESS_TOKEN_KEY);
-    alert('로그아웃 되었습니다.');
+    alert('Log-out Succeed.');
     const win = window.location;
     win.assign(`${win.origin}/welcome`);
 }

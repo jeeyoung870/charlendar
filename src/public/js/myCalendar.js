@@ -50,6 +50,7 @@ const MyCalendar = ({userId, userNm}) => {
     function makeCalendar(date) {
         const currentYear = date.getFullYear();
         const currentMonth = date.getMonth() + 1;
+        const currMonthNm = date.toLocaleString("en-US", { month: "short" });
     
         const firstDay = new Date(date.setDate(1)).getDay();
         const lastDay = new Date(currentYear, currentMonth, 0).getDate();
@@ -76,9 +77,9 @@ const MyCalendar = ({userId, userNm}) => {
             // `;
             if(holidayArr[targetDt]) {
                 htmlDummy += `
-                    <div class="holiday" onclick="alert('${holidayArr[targetDt][0]}는 휴장이에요.')" >
+                    <div class="holiday" onclick="alert('${holidayArr[targetDt][0]} is Holiday.')" >
                     ${i}
-                    <p>휴장</p>
+                    <p>H.D</p>
                     </div>
                 `;
             } else {
@@ -95,7 +96,7 @@ const MyCalendar = ({userId, userNm}) => {
         }
         
         document.querySelector(`.dateBoard`).innerHTML = htmlDummy;
-        document.querySelector(`.dateTitle`).innerText = `${currentYear}년 ${currentMonth}월`;
+        document.querySelector(`.dateTitle`).innerText = `${currMonthNm} ${currentYear}`;
     }
     // 이전달 이동
     function prevMonth () {
@@ -124,13 +125,13 @@ const MyCalendar = ({userId, userNm}) => {
             </div>
             
             <div className="grid dateHead">
-                <div>일</div>
-                <div>월</div>
-                <div>화</div>
-                <div>수</div>
-                <div>목</div>
-                <div>금</div>
-                <div>토</div>
+                <div>S</div>
+                <div>M</div>
+                <div>T</div>
+                <div>W</div>
+                <div>T</div>
+                <div>F</div>
+                <div>S</div>
             </div>
 
             <div className="grid dateBoard"></div>
@@ -138,10 +139,10 @@ const MyCalendar = ({userId, userNm}) => {
 
         {todayBDay ? 
         <a  onClick={() =>  goToDiary()} >
-            <div className="diary_button">오늘 일기 쓰러 가기</div>
+            <div className="diary_button">Today's Diary</div>
         </a>
         :
-        <div className="diary_button today_holiday">오늘은 휴장일</div>
+        <div className="diary_button today_holiday">Today is Holiday</div>
         }
         </>
     );

@@ -62,8 +62,8 @@ const MyEcoCalendarApp = () => {
             <MyStatus userId={user.userId} userNm={user.userNm} stckArr={stcks} />
             <MyCalendar userId={user.userId} userNm={user.userNm} /*monthDiary={diaryArr}*/ />
             
-            <div className="guide_holiday">ⓘ 주말을 포함한 휴장일은 챌린더를 쉬어가요.</div>
-            <div className="guide_holiday" onClick={logout} >로그아웃</div>
+            <div className="guide_holiday">ⓘ Weekends & holidays: Charlendar takes a break.</div>
+            <div className="guide_holiday" onClick={logout} >&nbsp; LOG-OUT</div>
         </div>
     );
 }

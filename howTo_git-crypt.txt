@@ -18,7 +18,7 @@ Initialized empty Git repository in D:/Users/jy870/외부프젝/sideProject/encr
 >git-crypt init
 Generating key...
 
-( .git/git-crypt/keys/default ---> copy the generated 'default' key file to other directory.)
+( .git/git-crypt/keys/default ---> copy the generated 'default' key file to other directory and keep it securely.)
 ( create '.gitattributes' file and write line --> 'src/config.js filter=git-crypt diff=git-crypt')
 ( create 'config.js' file.)
 
@@ -46,7 +46,7 @@ not encrypted: .gitattributes
 
 [ How to Unlock config.js ]
 
->git-crypt unlock C:\Users\Metanet\Downloads\default
+>git-crypt unlock C:\Users\Metanet\Downloads\default (directory where you stored default file.)
 
 문법 : 
 >git-crypt unlock [키파일 위치한 디렉토리경로]

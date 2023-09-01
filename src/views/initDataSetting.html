@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/public/css/image/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css"> 
-    <title>관리자 페이지</title>
+    <title>Manager Page</title>
     <script src="/public/js/devtools-detector.js"></script>
 </head>
 <body>
-    <h1>초기데이터 설정</h1>
+    <h1>Initial Data Setting</h1>
     <div id="dataSetting"></div>
 </body>
 <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
@@ -39,7 +39,7 @@ const InitDataSettingApp = () => {
     if(!user || user.userId === undefined){
         return <div></div>;
     } else if(user.userId !== mgrId) {
-        alert("관리자 계정으로만 접근 가능한 페이지입니다.");
+        alert("This page is acailable with manager account.");
         return <div></div>;
     } else {
         return(
